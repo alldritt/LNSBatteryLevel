@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "BatteryLevel",
+        "package": "LNSBatteryLevel",
         "repositoryURL": "https://github.com/alldritt/BatteryLevel.git",
         "state": {
           "branch": null,
-          "revision": "fc9ed428862898210a42343d3b272208110874e6",
-          "version": "1.0.0"
+          "revision": "f03cbde3e4ce54da4297c32a47f5442f4d9be631",
+          "version": "1.1.0"
         }
       }
     ]
