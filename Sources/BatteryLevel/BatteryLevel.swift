@@ -187,6 +187,7 @@ public struct BatteryLevel: View {
                                             .rotation(Angle(degrees: -12))
                                             .stroke(borderColor, style: StrokeStyle(lineWidth: borderWidth / 1.2, lineCap: .round, lineJoin: .round))))
                     .aspectRatio(aspectRatio, contentMode: .fit)
+                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
             }
             else {
                 BatteryLevelShape(level: $level, terminalLengthRatio: terminalLengthRatio)
@@ -201,6 +202,7 @@ public struct BatteryLevel: View {
                                               cornerRadius: cornerRadius)
                                 .stroke(borderColor, lineWidth: borderWidth))
                     .aspectRatio(aspectRatio, contentMode: .fit)
+                    .frame(width: geometry.size.width, height: geometry.size.height, alignment: .center)
             }
         }
     }
