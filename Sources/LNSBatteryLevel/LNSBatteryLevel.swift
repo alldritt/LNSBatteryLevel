@@ -1,6 +1,6 @@
 //
-//  BatterLevel.swift
-//  BatteryLevel
+//  LNSBatteryLevel.swift
+//  LNSBatteryLevel
 //
 //  Created by Mark Alldritt on 2021-02-14.
 //
@@ -119,7 +119,7 @@ fileprivate struct BatteryLevelShape: Shape {
 }
 
 
-public struct BatteryLevel: View {
+public struct LNSBatteryLevel: View {
     /// level 0...100, -1 = no level
     @Binding private var level: CGFloat
     @Binding private var charging: Bool

@@ -13,7 +13,6 @@
 		A5E2C01B25DCE025007CF12E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E2C00625DCE024007CF12E /* ContentView.swift */; };
 		A5E2C01C25DCE025007CF12E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E2C00725DCE025007CF12E /* Assets.xcassets */; };
 		A5E2C01D25DCE025007CF12E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5E2C00725DCE025007CF12E /* Assets.xcassets */; };
-		A5E2C05025DD005B007CF12E /* BatteryLevel in Frameworks */ = {isa = PBXBuildFile; productRef = A5E2C04F25DD005B007CF12E /* BatteryLevel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +31,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A5E2C05025DD005B007CF12E /* BatteryLevel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +51,7 @@
 				A5E2C00E25DCE025007CF12E /* iOS */,
 				A5E2C01525DCE025007CF12E /* macOS */,
 				A5E2C00D25DCE025007CF12E /* Products */,
+				A5E2C06B25DD7C1F007CF12E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -92,6 +91,13 @@
 			path = macOS;
 			sourceTree = "<group>";
 		};
+		A5E2C06B25DD7C1F007CF12E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,7 +115,6 @@
 			);
 			name = "Example (iOS)";
 			packageProductDependencies = (
-				A5E2C04F25DD005B007CF12E /* BatteryLevel */,
 			);
 			productName = "Example (iOS)";
 			productReference = A5E2C00C25DCE025007CF12E /* Example.app */;
@@ -128,6 +133,8 @@
 			dependencies = (
 			);
 			name = "Example (macOS)";
+			packageProductDependencies = (
+			);
 			productName = "Example (macOS)";
 			productReference = A5E2C01425DCE025007CF12E /* Example.app */;
 			productType = "com.apple.product-type.application";
@@ -458,14 +465,6 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		A5E2C04F25DD005B007CF12E /* BatteryLevel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A5E2C04E25DD005B007CF12E /* XCRemoteSwiftPackageReference "BatteryLevel" */;
-			productName = BatteryLevel;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A5E2C00025DCE024007CF12E /* Project object */;
 }
