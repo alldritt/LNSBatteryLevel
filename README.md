@@ -25,7 +25,7 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-        LNSBatteryLevel(level: $level, charging: $charging, borderColor: .blue)
+            LNSBatteryLevel(level: $level, charging: $charging, borderColor: .blue)
                 .frame(width: 200, height: 200)
                 .padding()
             Slider(value: $level)
