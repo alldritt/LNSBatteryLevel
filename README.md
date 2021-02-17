@@ -1,2 +1,5 @@
 # BatteryLevel
-A SwiftUI battery charge level view
+
+A SwiftUI battery charge level view.
+
+
