@@ -13,7 +13,7 @@ fileprivate extension Int {
 }
 
 
-struct ChargingShape: Shape {
+fileprivate struct ChargingShape: Shape {
 
     let terminalLengthRatio: CGFloat
     let borderWidth: CGFloat
@@ -40,7 +40,7 @@ struct ChargingShape: Shape {
 }
 
 
-struct BatteryBodyShape: Shape {
+fileprivate struct BatteryBodyShape: Shape {
 
     let terminalLengthRatio: CGFloat
     let terminalWidthRatio: CGFloat
@@ -99,12 +99,12 @@ struct BatteryBodyShape: Shape {
 }
 
 
-struct BatteryLevelShape: Shape {
+fileprivate struct BatteryLevelShape: Shape {
     /// 0 to 100 percent full, unavailable = -1
-    @Binding public var level: Float
+    @Binding public var level: CGFloat
         
     // relative size of battery terminal
-    @Binding public var terminalLengthRatio: CGFloat
+    let terminalLengthRatio: CGFloat
     
     func path(in bounds: CGRect) -> Path {
         // divide total length into body and terminal
@@ -119,51 +119,57 @@ struct BatteryLevelShape: Shape {
 }
 
 
-struct BatteryLevel: View {
+public struct BatteryLevel: View {
     /// level 0...100, -1 = no level
-    @Binding public var level: Float
-    @Binding public var charging: Bool
+    @Binding private var level: CGFloat
+    @Binding private var charging: Bool
 
-    /// relative size of  battery terminal
-    @State public var terminalLengthRatio: CGFloat = 0.1
-    @State public var terminalWidthRatio: CGFloat = 0.4
+    let terminalLengthRatio: CGFloat = 0.1
+    let terminalWidthRatio: CGFloat = 0.4
 
-    /// set as 0 for default borderWidth = length / 20
-    @State public var borderWidth: CGFloat = 0
-    @State public var borderColor = Color.blue
+    let borderColor: Color
+    
+    let lowThreshold: Int
 
-    /// set as 0 for default cornerRadius = length / 10
-    @State public var cornerRadius: CGFloat = 0
-
-    /// change color when level crosses below the threshold
-    @State public var lowThreshold: Int = 17
-
-    /// gradually change color when level crosses the threshold
-    @State public var gradientThreshold: Int = 0
-
-    @State public var highLevelColor = Color(red: 0.0, green: 0.9, blue: 0.0)
-    @State public var lowLevelColor = Color(red: 0.9, green: 0.0, blue: 0.0)
-    @State public var noLevelColor = Color(white: 0.8)
+    let highLevelColor: Color
+    let lowLevelColor: Color
+    let noLevelColor: Color
 
     private var levelColor: Color {
-        switch Int(max(0, min(level * Float(Int.fullBattery), Float(Int.fullBattery)))) {
+        switch Int(max(0, min(level * CGFloat(Int.fullBattery), CGFloat(Int.fullBattery)))) {
         case 0 ... lowThreshold:
             return lowLevelColor
-        case gradientThreshold ... .fullBattery:
+        case lowThreshold ... .fullBattery:
             return highLevelColor
         default:
             return noLevelColor
         }
     }
     
-    var body: some View {
+    public init(level: Binding<CGFloat>,
+                charging: Binding<Bool> = .constant(false),
+                borderColor: Color = .primary,
+                lowThreshold: Int = 15,
+                highLevelColor: Color = Color(red: 0.0, green: 0.9, blue: 0.0),
+                lowLevelColor: Color = Color(red: 0.9, green: 0.0, blue: 0.0),
+                noLevelColor: Color = Color(white: 0.8)) {
+        _level = level
+        _charging = charging
+        self.borderColor = borderColor
+        self.lowThreshold = lowThreshold
+        self.highLevelColor = highLevelColor
+        self.lowLevelColor = lowLevelColor
+        self.noLevelColor = noLevelColor
+    }
+    
+    public var body: some View {
         GeometryReader { geometry in
             let aspectRatio = CGFloat(0.6)
-            let cornerRadius = self.cornerRadius <= 0 ? geometry.size.height / 10 : self.cornerRadius
-            let borderWidth = self.borderWidth <= 0 ? geometry.size.height / 20 : self.borderWidth
+            let cornerRadius = geometry.size.height / 10
+            let borderWidth = geometry.size.height / 20
             
             if charging {
-                BatteryLevelShape(level: $level, terminalLengthRatio: $terminalLengthRatio)
+                BatteryLevelShape(level: $level, terminalLengthRatio: terminalLengthRatio)
                     .fill(levelColor)
                     .clipShape(BatteryBodyShape(terminalLengthRatio: terminalLengthRatio,
                                                 terminalWidthRatio: terminalWidthRatio,
@@ -183,7 +189,7 @@ struct BatteryLevel: View {
                     .aspectRatio(aspectRatio, contentMode: .fit)
             }
             else {
-                BatteryLevelShape(level: $level, terminalLengthRatio: $terminalLengthRatio)
+                BatteryLevelShape(level: $level, terminalLengthRatio: terminalLengthRatio)
                     .fill(levelColor)
                     .clipShape(BatteryBodyShape(terminalLengthRatio: terminalLengthRatio,
                                                 terminalWidthRatio: terminalWidthRatio,
