@@ -108,7 +108,8 @@ fileprivate struct BatteryLevelShape: Shape {
     
     func path(in bounds: CGRect) -> Path {
         // divide total length into body and terminal
-        let terminalLength = terminalLengthRatio * bounds.height
+        let terminalLength = self.level >= 0 ? terminalLengthRatio * bounds.height : 0
+        let level = self.level >= 0 ? self.level : 1.0
         var (_, bodyFrame) = bounds.divided(atDistance: terminalLength, from: .minYEdge)
 
         bodyFrame.origin.y += bodyFrame.size.height - bodyFrame.size.height * CGFloat(min(1.0, max(level, 0)))
@@ -136,7 +137,7 @@ public struct LNSBatteryLevel: View {
     let noLevelColor: Color
 
     private var levelColor: Color {
-        switch Int(max(0, min(level * CGFloat(Int.fullBattery), CGFloat(Int.fullBattery)))) {
+        switch Int(min(level * CGFloat(Int.fullBattery), CGFloat(Int.fullBattery))) {
         case 0 ... lowThreshold:
             return lowLevelColor
         case lowThreshold ... .fullBattery:
@@ -152,7 +153,7 @@ public struct LNSBatteryLevel: View {
                 lowThreshold: Int = 15,
                 highLevelColor: Color = Color(red: 0.0, green: 0.9, blue: 0.0),
                 lowLevelColor: Color = Color(red: 0.9, green: 0.0, blue: 0.0),
-                noLevelColor: Color = Color(white: 0.8)) {
+                noLevelColor: Color = Color(white: 0.4)) {
         _level = level
         _charging = charging
         self.borderColor = borderColor
