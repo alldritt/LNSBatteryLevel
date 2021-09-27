@@ -131,14 +131,18 @@ public struct LNSBatteryLevel: View {
     let borderColor: Color
     
     let lowThreshold: Int
+    let criticalThreshold: Int
 
     let highLevelColor: Color
     let lowLevelColor: Color
+    let criticalLevelColor: Color
     let noLevelColor: Color
 
     private var levelColor: Color {
         switch Int(min(level * CGFloat(Int.fullBattery), CGFloat(Int.fullBattery))) {
-        case 0 ... lowThreshold:
+        case 0 ... criticalThreshold:
+            return criticalLevelColor
+        case criticalThreshold ... lowThreshold:
             return lowLevelColor
         case lowThreshold ... .fullBattery:
             return highLevelColor
@@ -150,16 +154,20 @@ public struct LNSBatteryLevel: View {
     public init(level: Binding<CGFloat>,
                 charging: Binding<Bool> = .constant(false),
                 borderColor: Color = .primary,
-                lowThreshold: Int = 15,
+                lowThreshold: Int = 30,
+                criticalThreshold: Int = 15,
                 highLevelColor: Color = Color(red: 0.0, green: 0.9, blue: 0.0),
                 lowLevelColor: Color = Color(red: 0.9, green: 0.0, blue: 0.0),
+                criticalLevelColor: Color = Color(red: 1, green: 0.63, blue: 0.0),
                 noLevelColor: Color = Color(white: 0.4)) {
         _level = level
         _charging = charging
         self.borderColor = borderColor
         self.lowThreshold = lowThreshold
+        self.criticalThreshold = criticalThreshold
         self.highLevelColor = highLevelColor
         self.lowLevelColor = lowLevelColor
+        self.criticalLevelColor = criticalLevelColor
         self.noLevelColor = noLevelColor
     }
     
